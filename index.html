@@ -1,0 +1,366 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Informasi Swalayan</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+        }
+
+        header {
+            background-color: #176b45;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #125537;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            padding: 25px;
+            flex-wrap: wrap;
+        }
+
+        .content {
+            flex: 2;
+            min-width: 300px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .sidebar {
+            flex: 1;
+            min-width: 250px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        h2 {
+            color: #176b45;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #176b45;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            background-color: #176b45;
+            color: white;
+            border: none;
+            padding: 9px 14px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #104b30;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        input, select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .total {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e3f3e9;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: #176b45;
+            color: white;
+            text-align: center;
+            padding: 18px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                flex-direction: column;
+            }
+
+            nav {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>SWALAYAN SEJAHTERA</h1>
+        <p>Sistem Informasi Pengelolaan Swalayan</p>
+    </header>
+
+    <nav>
+        <a href="#beranda">Beranda</a>
+        <a href="#barang">Data Barang</a>
+        <a href="#transaksi">Transaksi</a>
+    </nav>
+
+    <div class="container" id="beranda">
+
+        <!-- TABEL DATA BARANG -->
+        <div class="content" id="barang">
+            <h2>Daftar Stok Barang</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Barang</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Indomie</td>
+                        <td>Rp3.500</td>
+                        <td>50</td>
+                        <td>
+                            <button onclick="tambahBarang('Indomie', 3500)">
+                                Beli
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>2</td>
+                        <td>Air Mineral</td>
+                        <td>Rp4.000</td>
+                        <td>40</td>
+                        <td>
+                            <button onclick="tambahBarang('Air Mineral', 4000)">
+                                Beli
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>3</td>
+                        <td>Roti</td>
+                        <td>Rp8.000</td>
+                        <td>30</td>
+                        <td>
+                            <button onclick="tambahBarang('Roti', 8000)">
+                                Beli
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>4</td>
+                        <td>Sabun Mandi</td>
+                        <td>Rp5.000</td>
+                        <td>25</td>
+                        <td>
+                            <button onclick="tambahBarang('Sabun Mandi', 5000)">
+                                Beli
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- FORM TRANSAKSI -->
+        <div class="sidebar" id="transaksi">
+            <h2>Form Transaksi</h2>
+
+            <form onsubmit="prosesPembayaran(event)">
+
+                <label>Nama Pembeli</label>
+                <input type="text" id="nama" placeholder="Masukkan nama pembeli" required>
+
+                <label>Pilih Barang</label>
+                <select id="barangPilihan">
+                    <option value="Indomie|3500">Indomie - Rp3.500</option>
+                    <option value="Air Mineral|4000">Air Mineral - Rp4.000</option>
+                    <option value="Roti|8000">Roti - Rp8.000</option>
+                    <option value="Sabun Mandi|5000">Sabun Mandi - Rp5.000</option>
+                </select>
+
+                <label>Jumlah Barang</label>
+                <input type="number" id="jumlah" min="1" value="1" required>
+
+                <button type="submit">Tambah ke Keranjang</button>
+            </form>
+
+            <br>
+            <h2>Keranjang Belanja</h2>
+
+            <div id="keranjang">
+                Belum ada barang yang dipilih.
+            </div>
+
+            <div class="total">
+                <p>Total: <span id="total">Rp0</span></p>
+                <p>Diskon 5%: <span id="diskon">Rp0</span></p>
+                <p>Bayar: <span id="bayar">Rp0</span></p>
+            </div>
+
+            <br>
+            <button onclick="bayarSekarang()">Bayar Sekarang</button>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Swalayan Sejahtera | Sistem Informasi Swalayan</p>
+    </footer>
+
+    <script>
+        let daftarBelanja = [];
+        let totalHarga = 0;
+
+        function tambahBarang(nama, harga) {
+            daftarBelanja.push({
+                nama: nama,
+                harga: harga,
+                jumlah: 1
+            });
+
+            tampilkanKeranjang();
+        }
+
+        function prosesPembayaran(event) {
+            event.preventDefault();
+
+            let pilihan = document.getElementById("barangPilihan").value;
+            let data = pilihan.split("|");
+
+            let nama = data[0];
+            let harga = Number(data[1]);
+            let jumlah = Number(document.getElementById("jumlah").value);
+
+            daftarBelanja.push({
+                nama: nama,
+                harga: harga,
+                jumlah: jumlah
+            });
+
+            tampilkanKeranjang();
+        }
+
+        function tampilkanKeranjang() {
+            let keranjang = document.getElementById("keranjang");
+
+            keranjang.innerHTML = "";
+            totalHarga = 0;
+
+            daftarBelanja.forEach(function(item) {
+                let subtotal = item.harga * item.jumlah;
+
+                totalHarga += subtotal;
+
+                keranjang.innerHTML +=
+                    "<p>" + item.nama +
+                    " x " + item.jumlah +
+                    " = Rp" + subtotal.toLocaleString("id-ID") +
+                    "</p>";
+            });
+
+            let diskon = totalHarga * 0.05;
+            let bayar = totalHarga - diskon;
+
+            document.getElementById("total").innerText =
+                "Rp" + totalHarga.toLocaleString("id-ID");
+
+            document.getElementById("diskon").innerText =
+                "Rp" + diskon.toLocaleString("id-ID");
+
+            document.getElementById("bayar").innerText =
+                "Rp" + bayar.toLocaleString("id-ID");
+        }
+
+        function bayarSekarang() {
+            let nama = document.getElementById("nama").value;
+
+            if (nama === "" || daftarBelanja.length === 0) {
+                alert("Silakan isi nama pembeli dan pilih barang!");
+                return;
+            }
+
+            let diskon = totalHarga * 0.05;
+            let bayar = totalHarga - diskon;
+
+            alert(
+                "Transaksi Berhasil!\n" +
+                "Nama Pembeli: " + nama + "\n" +
+                "Total Belanja: Rp" + totalHarga.toLocaleString("id-ID") +
+                "\nDiskon: Rp" + diskon.toLocaleString("id-ID") +
+                "\nTotal Pembayaran: Rp" + bayar.toLocaleString("id-ID")
+            );
+
+            daftarBelanja = [];
+            totalHarga = 0;
+
+            tampilkanKeranjang();
+
+            document.getElementById("nama").value = "";
+            document.getElementById("jumlah").value = 1;
+        }
+    </script>
+
+</body>
+</html>
